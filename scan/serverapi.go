@@ -109,17 +109,17 @@ func detectOS(c config.ServerInfo) (osType osTypeInterface) {
 		return
 	}
 
-	itsMe, osType, fatalErr = detectContainerImage(c)
-	if fatalErr != nil {
-		osType.setErrs(
-			[]error{xerrors.Errorf("Failed to detect OS: %w", fatalErr)},
-		)
-		return
-	}
-	if itsMe {
-		util.Log.Debugf("Container")
-		return
-	}
+	// itsMe, osType, fatalErr = detectContainerImage(c)
+	// if fatalErr != nil {
+	// 	osType.setErrs(
+	// 		[]error{xerrors.Errorf("Failed to detect OS: %w", fatalErr)},
+	// 	)
+	// 	return
+	// }
+	// if itsMe {
+	// 	util.Log.Debugf("Container")
+	// 	return
+	// }
 
 	itsMe, osType, fatalErr = detectDebianWithRetry(c)
 	if fatalErr != nil {

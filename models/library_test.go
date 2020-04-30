@@ -3,19 +3,20 @@ package models
 import (
 	"testing"
 
-	godeptypes "github.com/aquasecurity/go-dep-parser/pkg/types"
-	"github.com/aquasecurity/trivy/pkg/db"
+	"github.com/aquasecurity/trivy-db/pkg/db"
 	"github.com/aquasecurity/trivy/pkg/log"
+	"github.com/aquasecurity/trivy/pkg/types"
+	"github.com/aquasecurity/trivy/pkg/utils"
 )
 
 func TestScan(t *testing.T) {
 	var tests = []struct {
 		path string
-		pkgs []godeptypes.Library
+		pkgs []types.Library
 	}{
 		{
 			path: "app/package-lock.json",
-			pkgs: []godeptypes.Library{
+			pkgs: []types.Library{
 				{
 					Name:    "jquery",
 					Version: "2.2.4",
@@ -32,7 +33,8 @@ func TestScan(t *testing.T) {
 		t.Errorf("trivy logger failed")
 	}
 
-	if err := db.Init(); err != nil {
+	cacheDir := utils.DefaultCacheDir()
+	if err := db.Init(cacheDir); err != nil {
 		t.Errorf("trivy db.Init failed")
 	}
 	for _, v := range tests {
